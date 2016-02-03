@@ -1,0 +1,37 @@
+{
+  "name": "aw-yea-bot",
+  "version": "1.0.0",
+  "description": "Aw yea today I'm gonna make a bot!",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jimkang/aw-yea-bot.git"
+  },
+  "keywords": [],
+  "author": "Jim Kang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jimkang/aw-yea-bot/issues"
+  },
+  "homepage": "https://github.com/jimkang/aw-yea-bot",
+  "devDependencies": {
+    "tape": "^3.0.3"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "better-know-a-tweet": "^1.0.1",
+    "call-next-tick": "^1.1.2",
+    "change": "0.0.0",
+    "iscool": "^1.1.11",
+    "level": "^1.4.0",
+    "level-sublevel": "^6.5.4",
+    "post-tweet-chain": "^1.0.0",
+    "probable": "^1.8.0",
+    "twit": "^1.1.20",
+    "wander-google-ngrams": "^2.3.0",
+    "wordnok": "^3.1.0"
+  }
+}
