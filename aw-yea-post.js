@@ -29,7 +29,7 @@ function postTweet(text, done) {
   else {
     var opts = {
       twit: twit,
-      parts: text
+      parts: [text]
     };
     postTweetChain(opts, done);
   }
