@@ -6,6 +6,9 @@ var behavior = require('./behavior');
 var shouldReplyToTweet = require('./should-reply-to-tweet');
 var level = require('level');
 var Sublevel = require('level-sublevel')
+var getExclamationType = require('./get-exclamation').getExclamationType;
+var probable = require('probable');
+var getPrelude = require('./get-prelude');
 
 var dryRun = false;
 if (process.argv.length > 2) {
@@ -17,6 +20,13 @@ var db = Sublevel(level(__dirname + '/data/aw-yea-responses.db'));
 var lastReplyDates = db.sublevel('last-reply-dates');
 
 var username = behavior.twitterUsername;
+
+var responseTypeTable = probable.createTableFromDef({
+  '0-9': 'object',
+  '10': 'object-ngram-elaboration',
+  '11': 'random-verb-ngram-elaboration',
+  '12-14': 'simple-agreement'
+});
 
 var twit = new Twit(config.twitter);
 var streamOpts = {
@@ -31,6 +41,7 @@ function respondToTweet(incomingTweet) {
   async.waterfall(
     [
       checkIfWeShouldReply,
+      getReplyBody,
       composeReply,
       postTweet,
       recordThatReplyHappened
@@ -46,8 +57,18 @@ function respondToTweet(incomingTweet) {
     shouldReplyToTweet(opts, done);
   }  
 
-  function composeReply(done) {
-    var text = '@' + incomingTweet.user.screen_name + ' I am replying! ';
+  function getReplyBody(done) {
+    var exclamationType = responseTypeTable.roll();
+    if (exclamationType === 'simple-agreement') {
+      callNextTick(done, null, getPrelude());
+    }
+    else {
+      getExclamationType(exclamationType, done);
+    }
+  }
+
+  function composeReply(exclamation, done) {
+    var text = '@' + incomingTweet.user.screen_name + ' ' + exclamation;
     callNextTick(done, null, text);
   }
 

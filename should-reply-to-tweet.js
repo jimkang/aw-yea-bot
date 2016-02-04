@@ -3,7 +3,9 @@ var callNextTick = require('call-next-tick');
 var betterKnowATweet = require('better-know-a-tweet');
 var async = require('async');
 var behavior = require('./behavior');
+var createIsCool = require('iscool');
 
+var iscool = createIsCool();
 var username = behavior.twitterUsername;
 
 // Passes an error if you should not reply.
@@ -27,8 +29,13 @@ function shouldReplyToTweet(opts, done) {
     return;
   }
 
+  var words = tweet.text.split(/[ ":.,;!?#]/);
+  if (!words.every(iscool)) {
+    callNextTick(done, new Error('Not cool to reply to tweet.'));
+    return;
+  }
+
   var tweetMentionsBot = doesTweetMentionBot(tweet);
-  debugger;
 
   if (behavior.chimeInUsers &&
     behavior.chimeInUsers.indexOf(tweet.user.screen_name) !== -1 &&
@@ -63,7 +70,6 @@ function shouldReplyToTweet(opts, done) {
     lastReplyDates.get(tweet.user.id_str, passLastReplyDate);
 
     function passLastReplyDate(error, dateString) {
-      debugger;
       var date;
       // Don't pass on the error – `whenWasUserLastRepliedTo` can't find a
       // key, it returns a NotFoundError. For us, that's expected.
@@ -79,7 +85,6 @@ function shouldReplyToTweet(opts, done) {
   }
 
   function replyDateWasNotTooRecent(tweet, lastReplyDate, done) {
-    debugger;
     var hoursElapsed = (Date.now() - lastReplyDate.getTime())/(60 * 60 * 1000);
 
     if (hoursElapsed >= waitingPeriod) {

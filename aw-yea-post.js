@@ -4,7 +4,7 @@ var Twit = require('twit');
 var async = require('async');
 var probable = require('probable');
 var postTweetChain = require('post-tweet-chain');
-var getExclamation = require('./get-exclamation');
+var getExclamation = require('./get-exclamation').getExclamation;
 
 var dryRun = false;
 if (process.argv.length > 2) {

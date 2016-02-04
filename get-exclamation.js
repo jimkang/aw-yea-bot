@@ -20,7 +20,10 @@ var exclamationTypeTable = probable.createTableFromDef({
 });
 
 function getExclamation(done) {
-  var type = exclamationTypeTable.roll();
+  getExclamationType(exclamationTypeTable.roll(), done);
+}
+
+function getExclamationType(type, done) {
   if (type === 'object') {
     async.waterfall(
       [
@@ -133,4 +136,7 @@ function formatObjectExclamation(basePhrase, done) {
   callNextTick(done, null, getPrelude() + ' ' + basePhrase + '!');
 }
 
-module.exports = getExclamation;
+module.exports = {
+  getExclamation: getExclamation,
+  getExclamationType: getExclamationType
+};
