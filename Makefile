@@ -27,7 +27,12 @@ push-docker-image: build-docker-image
 run-docker-image:
 	docker run -v $(HOMEDIR)/config:/usr/src/app/config \
     -v $(HOMEDIR)/data:/usr/src/app/data \
-		jkang/aw-yea-bot make start
+		jkang/aw-yea-bot node aw-yea-post.js
+
+run-docker-image-responder:
+	docker run -v $(HOMEDIR)/config:/usr/src/app/config \
+    -v $(HOMEDIR)/data:/usr/src/app/data \
+		jkang/aw-yea-bot node aw-yea-responder.js
 
 pushall: push-docker-image
 	git push origin master
