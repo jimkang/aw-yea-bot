@@ -91,7 +91,8 @@ function getNgramElaboration(theWord, wordIsVerb, done) {
           'is',
           'and',
           'or',
-          'every'
+          'every',
+          'at'
         ],
         lookFor: '*_NOUN',
         posShouldBeUnambiguous: true
