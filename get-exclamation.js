@@ -83,17 +83,7 @@ function getNgramElaboration(theWord, wordIsVerb, done) {
       {
         name: 'pushedVerb',
         needToProceed: ['noun', 'pronoun', 'noun-plural', 'adjective'],
-        disallowedExits: [
-          'his',
-          'her',
-          'who',
-          'its',
-          'is',
-          'and',
-          'or',
-          'every',
-          'at'
-        ],
+        disallowCommonBadExits: true,
         lookFor: '*_NOUN',
         posShouldBeUnambiguous: true
       },

@@ -31,7 +31,7 @@
     "post-tweet-chain": "^1.0.0",
     "probable": "^1.8.0",
     "twit": "^1.1.20",
-    "wander-google-ngrams": "^2.4.1",
+    "wander-google-ngrams": "^2.5.1",
     "wordnok": "^3.1.0"
   }
 }
