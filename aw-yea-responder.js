@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var config = require('./config/config');
 var callNextTick = require('call-next-tick');
 var Twit = require('twit');

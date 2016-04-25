@@ -1,0 +1,13 @@
+[Unit]
+Description=aw-yea-bot
+After=network.target
+[Service]
+ExecStart=/var/apps/aw-yea-bot/aw-yea-responder.js
+Restart=always
+User=app
+Group=app
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/apps/aw-yea-bot
+[Install]
+WantedBy=multi-user.target
