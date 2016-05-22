@@ -1,17 +1,17 @@
 HOMEDIR = $(shell pwd)
-SSHCMD = ssh $(SMUSER)@smidgeo-headporters
+SMUSER = noderunner
+PRIVUSER = root
+SERVER = sprigot-droplet
+SSHCMD = ssh $(SMUSER)@$(SERVER)
 PROJECTNAME = aw-yea-bot
-APPDIR = /var/apps/$(PROJECTNAME)
+APPDIR = /var/www/$(PROJECTNAME)
 
 pushall: sync restart-remote
 	git push origin master
 
 sync:
-	rsync -a $(HOMEDIR) $(SMUSER)@smidgeo-headporters:/var/apps/ --exclude node_modules/ --exclude data/
-	ssh $(SMUSER)@smidgeo-headporters "cd /var/apps/$(PROJECTNAME) && npm install"
-
-restart-remote:
-	$(SSHCMD) "systemctl restart $(PROJECTNAME)"
+	rsync -a $(HOMEDIR) $(SMUSER)@$(SERVER):/var/www/ --exclude node_modules/ --exclude data/
+	ssh $(SMUSER)@$(SERVER) "cd /var/www/$(PROJECTNAME) && npm install"
 
 set-permissions:
 	$(SSHCMD) "chmod +x $(APPDIR)/aw-yea-responder.js && \
@@ -19,6 +19,11 @@ set-permissions:
 
 update-remote: sync set-permissions restart-remote
 
+# You need a user with privileges to write to /etc/systemd and to run systemctl for 
+# these targets.
+restart-remote:
+	ssh $(PRIVUSER)@$(SERVER) "service $(PROJECTNAME) restart"
+
 install-service:
-	$(SSHCMD) "cp $(APPDIR)/$(PROJECTNAME).service /etc/systemd/system && \
-	systemctl daemon-reload"
+	ssh $(PRIVUSER)@$(SERVER) "cp $(APPDIR)/$(PROJECTNAME).service /etc/systemd/system && \
+	systemctl enable aw-yea-bot"

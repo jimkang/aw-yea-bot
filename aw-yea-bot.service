@@ -2,12 +2,11 @@
 Description=aw-yea-bot
 After=network.target
 [Service]
-ExecStart=/var/apps/aw-yea-bot/aw-yea-responder.js
+ExecStart=/var/www/aw-yea-bot/aw-yea-responder.js
 Restart=always
-User=app
-Group=app
+User=noderunner
+Group=robots
 Environment=PATH=/usr/bin:/usr/local/bin
-Environment=NODE_ENV=production
-WorkingDirectory=/var/apps/aw-yea-bot
+WorkingDirectory=/var/www/aw-yea-bot
 [Install]
 WantedBy=multi-user.target
