@@ -6,7 +6,7 @@ SSHCMD = ssh $(SMUSER)@$(SERVER)
 PROJECTNAME = aw-yea-bot
 APPDIR = /var/www/$(PROJECTNAME)
 
-pushall: sync restart-remote
+pushall: sync  set-permissions restart-remote
 	git push origin master
 
 sync:
