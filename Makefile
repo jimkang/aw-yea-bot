@@ -5,7 +5,7 @@ SERVER = smidgeo
 SSHCMD = ssh $(USER)@$(SERVER)
 APPDIR = /opt/$(PROJECTNAME)
 
-pushall: update-remote
+pushall: sync
 	git push origin master
 
 sync:
@@ -16,4 +16,4 @@ set-permissions:
 	$(SSHCMD) "chmod +x $(APPDIR)/aw-yea-responder.js && \
 	chmod 777 -R $(APPDIR)/data/aw-yea-responses.db"
 
-update-remote: sync set-permissions restart-remote
+# update-remote: sync set-permissions restart-remote
